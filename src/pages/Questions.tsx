@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import Button from "../components/Button";
 import Question from "../components/Question";
 import DarkModeToggle from "../components/DarkModeToggle";
-import { BACK_BUTTON, NEXT_BUTTON } from "../constants/icons";
+import { BACK_BUTTON, NEXT_BUTTON } from "../constants/icon";
 import { useLocation, useNavigate } from "react-router-dom";
 import { quizContext } from "../context/context";
 import axios from 'axios'

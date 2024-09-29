@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DarkModeToggle from "./DarkModeToggle";
-import { CROSS, BARS } from "../constants/icons";
+import { CROSS, BARS } from "../constants/icon";
 import { Link, Outlet } from "react-router-dom";
 
 function NavBar() {
