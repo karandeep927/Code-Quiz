@@ -1,4 +1,4 @@
-import { useContext, useEffect, useReducer } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import Button from "../components/Button";
 import DarkModeToggle from "../components/DarkModeToggle";
 import Question from "../components/Question";
@@ -12,7 +12,7 @@ interface InitialState {
   total: number;
 }
 
-type Action = { type: 'right' | 'wrong' | 'notAttempt' | 'total'; payload?: number };
+type Action = { type: 'right' | 'wrong' | 'notAttempt' | 'total' | 'reset'; payload?: number };
 
 const initialState: InitialState = {
   right: 0,
@@ -31,8 +31,10 @@ function reducer(state: InitialState, action: Action): InitialState {
       return { ...state, notAttempt: state.notAttempt + (action.payload || 1) };
     case 'total':
       return { ...state, total: state.total + (action.payload || 1) };
+    case 'reset':
+      return {...state,total:0,notAttempt:0,right:0,wrong:0}
     default:
-      throw new Error('Unhandled action type');
+      return state;
   }
 }
 
@@ -40,7 +42,7 @@ function Result() {
   const navigate = useNavigate();
   const [state , dispatch] = useReducer(reducer,initialState)
   const { questions } = useContext(quizContext);
-
+  const [showResult] = useState(true)
 
   function countScore() {
     questions.forEach((question) => {
@@ -54,6 +56,9 @@ function Result() {
       dispatch({ type: 'total' });
     });
   }
+  useEffect(()=>{
+    dispatch({type:'reset'})
+  },[])
   useEffect(countScore,[questions])
   return (
     <div className="pb-5 min-h-screen pt-[70px] flex flex-col gap-6 justify-center items-center relative dark:bg-gray-800">
@@ -85,11 +90,12 @@ function Result() {
           Not Attempted: {state.notAttempt}
         </h2>
         <div className="border shadow-md w-full sm:w-3/4 lg:w-1/2 p-4 mt-5 relative bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700">
-            {questions.map((question) => {
+            {questions.map((question,index) => {
               return (
-                <Question questionObj={question} onOptionSelect={() => {}} />
+                <Question key={index} questionObj={question} onOptionSelect={() => {}} showResult={showResult}/>
               );
             })}
+            <div className="w-full h-full absolute top-0 left-0"></div>
         </div>
       </div>
     </div>

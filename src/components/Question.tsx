@@ -11,12 +11,13 @@ interface Question {
 interface QuestionsProps {
   questionObj: Question;
   onOptionSelect: (questionNumber: number, selectedOption: number) => void;
+  showResult:boolean
 }
 
-function Question({ questionObj, onOptionSelect }: QuestionsProps) {
+function Question({ questionObj, onOptionSelect ,showResult}: QuestionsProps) {
   const [selected, setSelected] = useState<number | null>(questionObj?.selectedOption || null); // Safeguard against undefined
 
-  const { question, questionNumber, options } = questionObj || {}; // Safeguard against undefined
+  const { question, questionNumber, options , answer } = questionObj || {}; // Safeguard against undefined
 
   useEffect(() => {
     if (questionObj) {
@@ -26,7 +27,7 @@ function Question({ questionObj, onOptionSelect }: QuestionsProps) {
 
   const handleOptionClick = (index: number) => {
     setSelected(index);
-    onOptionSelect(questionNumber, index); // Update parent state with selected option
+    onOptionSelect(questionNumber, index);
   };
 
   return (
@@ -39,9 +40,10 @@ function Question({ questionObj, onOptionSelect }: QuestionsProps) {
           <li
             key={index}
             onClick={() => handleOptionClick(index)}
-            className={`border p-3 my-4 cursor-pointer ${
-              selected === index ? "bg-slate-300 dark:bg-gray-600" : ""
-            } dark:text-white dark:border-gray-700`}
+            className={`border p-3 my-4 cursor-pointer 
+              ${selected === index ? "bg-slate-300 dark:bg-gray-600" : ""}
+              ${showResult ? option === answer ? "bg-primaryBg text-whiteText" : "" : ""} 
+              dark:text-white dark:border-gray-700`}  
           >
             {option}
           </li>

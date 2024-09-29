@@ -21,18 +21,20 @@ function Questions() {
   const [name, level] = pathname.split('/').slice(2);
   const { questions, setQuestions } = useContext(quizContext);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
+        setError(false)
         const response = await axios.get(`http://localhost:3000/quiz/${name.toLowerCase()}/${level.toLowerCase()}`);
-        console.log(response.data)
-        setQuestions(response.data.questions);
-      } catch (error) {
-        console.error('Error fetching questions:', error);
+        console.log(response)
+        setQuestions(response.data?.questions);
+      } catch (err) {
+        setError(true)
       }
     };
-
+    localStorage.clear()
     fetchQuestions();
   }, [name, setQuestions,level]);
 
@@ -57,9 +59,8 @@ function Questions() {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
     }
   };
-  if (questions.length === 0) {
-    return <div>Loading...</div>;
-  }
+
+
   return (
     <div className="h-screen w-full flex justify-center items-center relative bg-slate-100 dark:bg-gray-900">
       <div className="w-full flex justify-start py-3 shadow-md absolute top-0 ">
@@ -76,10 +77,12 @@ function Questions() {
       </div>
 
       <div className="w-full m-2 mt-14 sm:h-[550px] sm:w-[900px] border border-slate-300 bg-white dark:border-slate-600 flex flex-col justify-between items-end dark:bg-gray-800">
-        <Question
+        {error && <div className="w-full h-full text-center align-middle">Error while Fetching Questions</div>}
+        {questions.length === 0 ? <div className="w-full h-full text-center align-middle">Loading....</div> : <Question
           questionObj={questions[currentQuestionIndex]}
           onOptionSelect={handleOptionSelect}
-        />
+          showResult={false}
+        />}
 
         {currentQuestionIndex === questions.length - 1 ? (
           <Button

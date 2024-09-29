@@ -16,7 +16,7 @@ function NavBar() {
           size={23}
           onClick={toggleNavBar}
           className="text-thirdText cursor-pointer sm:hidden" />
-        <h1 className="font-bold text-3xl uppercase text-thirdText ">logo</h1>
+        <h1 className="font-bold text-3xl uppercase text-thirdText ">Code Quiz</h1>
       </div>
       <div
         className={`flex flex-col items-center bg-primaryBg  absolute z-10 w-full top-0 p-3 transition-all duration-300 ease-in-out  sm:pt-3 sm:static sm:w-1/2 sm:flex-row ${isOpen ? "left-0" : "-left-[100%]"}`}

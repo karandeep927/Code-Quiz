@@ -41,7 +41,7 @@ function Home() {
             tag="Intermediate-III"
           />
           <Card
-            heading="C++"
+            heading="Cpp"
             desc="Play and Test you Knowledge"
             img={CPP_IMG}
             tag="Intermediate-II"
