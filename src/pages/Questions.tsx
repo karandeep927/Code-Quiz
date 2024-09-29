@@ -27,7 +27,7 @@ function Questions() {
     const fetchQuestions = async () => {
       try {
         setError(false)
-        const response = await axios.get(`http://localhost:3000/quiz/${name.toLowerCase()}/${level.toLowerCase()}`);
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/quiz/${name.toLowerCase()}/${level.toLowerCase()}`);
         console.log(response)
         setQuestions(response.data?.questions);
       } catch (err) {
