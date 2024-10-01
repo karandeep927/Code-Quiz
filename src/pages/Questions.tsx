@@ -77,8 +77,8 @@ function Questions() {
       </div>
 
       <div className="w-full m-2 mt-14 sm:h-[550px] sm:w-[900px] border border-slate-300 bg-white dark:border-slate-600 flex flex-col justify-between items-end dark:bg-gray-800">
-        {error && <div className="w-full h-full text-center align-middle">Error while Fetching Questions</div>}
-        {questions.length === 0 ? <div className="w-full h-full text-center align-middle">Loading....</div> : <Question
+        {error && <div className="w-full h-full text-center align-middle dark:text-thirdText">Error while Fetching Questions</div>}
+        {questions.length === 0 ? <div className="w-full h-full text-center align-middle dark:text-thirdText">Loading....</div> : <Question
           questionObj={questions[currentQuestionIndex]}
           onOptionSelect={handleOptionSelect}
           showResult={false}
