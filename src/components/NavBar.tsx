@@ -33,6 +33,7 @@ function NavBar() {
         ].map((item) => (
           <Link
             to={item.path}
+            key={item.name}
             className="sm:px-3  cursor-pointer border-b w-full mt-2 z-10 border-b-slate-300 sm:border-none sm:mt-0"
           >
             <h2 className="text-xl text-center text-thirdText hover:bg-thirdBg hover:text-primaryText sm:rounded-lg py-1">

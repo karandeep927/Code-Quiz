@@ -18,7 +18,7 @@ function Get_started() {
       <p className="text-thirdText dark:text-gray-300 sm:text-xl my-5 sm:my-6">
         Sharpen your coding skills with quizzes on programming languages and frameworks. From beginner to advanced levels, challenge yourself and deepen your understanding of different languages. Test your knowledge and stay ahead in the ever-evolving world of technology!
       </p>
-      <Link to="/dashboard">
+      <Link to="/">
       <Button
         className="text-white rounded-lg mt-5 border border-primaryBg bg-primaryBg focus:bg-secondBg dark:bg-gray-700 dark:border-gray-500 dark:focus:bg-gray-600"
         >
