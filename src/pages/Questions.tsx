@@ -1,11 +1,10 @@
 import { useContext, useState, useEffect } from "react";
 import Button from "../components/Button";
 import Question from "../components/Question";
-import DarkModeToggle from "../components/DarkModeToggle";
 import { BACK_BUTTON, NEXT_BUTTON } from "../constants/icon";
 import { useLocation, useNavigate } from "react-router-dom";
 import { quizContext } from "../context/context";
-import axios from 'axios'
+import axios from "axios";
 
 interface QuestionType {
   question: string;
@@ -18,27 +17,38 @@ interface QuestionType {
 function Questions() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [name, level] = pathname.split('/').slice(2);
+  const [name, level] = pathname.split("/").slice(2);
   const { questions, setQuestions } = useContext(quizContext);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
+  const [loading,setLoading] = useState(false)
+  const [isShow,setShow] = useState(false);
 
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        setError(false)
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/quiz/${name.toLowerCase()}/${level.toLowerCase()}`);
-        console.log(response)
+        setError(false);
+        setLoading(true)
+        localStorage.set("questions","");
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_BASE_URL
+          }/quiz/${name.toLowerCase()}/${level.toLowerCase()}`
+        );
+        setLoading(false)
         setQuestions(response.data?.questions);
       } catch (err) {
-        setError(true)
+        setError(true);
+        setLoading(false)
       }
     };
-    localStorage.clear()
-    fetchQuestions();
-  }, [name, setQuestions,level]);
+      fetchQuestions();
+  }, [name, setQuestions, level]);
 
-  const handleOptionSelect = (questionNumber: number, selectedOption: number) => {
+  const handleOptionSelect = (
+    questionNumber: number,
+    selectedOption: number
+  ) => {
     setQuestions((prevQuestions: QuestionType[]) =>
       prevQuestions.map((question) =>
         question.questionNumber === questionNumber
@@ -48,6 +58,7 @@ function Questions() {
     );
   };
 
+
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -55,34 +66,51 @@ function Questions() {
   };
 
   const handleBack = () => {
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
-    }
+    setShow(true)
   };
 
-
   return (
-    <div className="h-screen w-full flex justify-center items-center relative bg-slate-100 dark:bg-gray-900">
-      <div className="w-full flex justify-start py-3 shadow-md absolute top-0 ">
+    <div className="h-screen w-full flex justify-center items-center bg-slate-100 dark:bg-gray-900">
+      <div className="w-full flex justify-start py-3 shadow-md absolute top-0 bg-secondBg">
         <Button
-          onclick={handleBack}
-          className="disabled:opacity-50"
-          isDisabled={currentQuestionIndex === 0}
+          onclick={handleBack}          
         >
-          <BACK_BUTTON size={23} className="dark:text-white" />
+          <BACK_BUTTON size={23} className="text-white" />
         </Button>
-        <div className="absolute top-5 right-5 ">
-          <DarkModeToggle />
-        </div>
       </div>
 
-      <div className="w-full m-2 mt-14 sm:h-[550px] sm:w-[900px] border border-slate-300 bg-white dark:border-slate-600 flex flex-col justify-between items-end dark:bg-gray-800">
-        {error && <div className="w-full h-full text-center align-middle dark:text-thirdText">Error while Fetching Questions</div>}
-        {questions.length === 0 ? <div className="w-full h-full text-center align-middle dark:text-thirdText">Loading....</div> : <Question
-          questionObj={questions[currentQuestionIndex]}
-          onOptionSelect={handleOptionSelect}
-          showResult={false}
-        />}
+      <div className="w-full  m-2 mt-14 sm:h-[550px] sm:w-[900px] relative bg-white flex flex-col justify-between items-end dark:bg-gray-800">
+        {
+          isShow && 
+          <div className="absolute top-0 left-0 bg-thirdBg z-20 w-full h-full flex items-center justify-center">
+            <div className=" border bg-white p-3 flex flex-col justify-between items-end w-64 h-32">
+            <p className="text-left w-full">Do you want to exit the Quiz ?</p>
+            <div className="flex justify-around w-full">
+              <Button className="bg-secondBg text-white" onclick={() => {setShow(!isShow);setQuestions([]); navigate("/quiz")}}>Yes</Button>
+              <Button className="text-thirdText border" onclick={() => setShow(false)}>No</Button>
+            </div>
+            </div>
+        </div>
+        }
+        {error && (
+          <div className="w-full h-full text-center align-middle dark:text-thirdText">
+            Error while Fetching Questions
+          </div>
+        )}
+        {
+            loading &&  (
+              <div className="w-full h-full text-center align-middle dark:text-thirdText">
+                Loading....
+              </div>
+            ) 
+        }
+        { questions.length > 0 && (
+          <Question
+            questionObj={questions[currentQuestionIndex]}
+            onOptionSelect={handleOptionSelect}
+            showResult={false}
+          />
+        )}
 
         {currentQuestionIndex === questions.length - 1 ? (
           <Button
@@ -94,7 +122,8 @@ function Questions() {
         ) : (
           <Button
             onclick={handleNext}
-            className="m-5 flex items-center text-whiteText dark:text-gray-100 bg-primaryBg dark:bg-gray-700 gap-2 rounded-md content-end disabled:opacity-50"
+            isDisabled={questions.length === 0}
+            className="m-5 flex items-center text-white dark:text-gray-100 bg-secondBg dark:bg-gray-700 gap-2 rounded-md content-end disabled:opacity-50"
           >
             Next <NEXT_BUTTON size={23} />
           </Button>

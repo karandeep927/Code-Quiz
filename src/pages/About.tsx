@@ -1,7 +1,7 @@
 
 function About(){
   return (
-    <div className="bg-primaryBg p-6 min-h-screen flex flex-col items-center gap-5">
+    <div className=" p-6 min-h-screen flex flex-col items-center gap-5">
       <h1 className="text-2xl sm:text-4xl font-bold mb-4 text-thirdText">About Code Quiz App</h1>
       <p className="sm:text-lg mb-6 text-whiteText sm:w-1/2">
         Welcome to <strong>Code Quiz App</strong>, your go-to platform for enhancing coding skills through fun and interactive quizzes. 
@@ -13,7 +13,7 @@ function About(){
         <li>Save and review your answers even after refreshing the page.</li>
         <li>Perfect for both beginners and experienced developers.</li>
       </ul>
-      <p className="text-lg text-white border border-thirdBg p-2 text-center sm:w-1/2">
+      <p className="text-lg  border border-thirdBg p-2 text-center sm:w-1/2">
         Our mission is to help developers learn and grow through challenges, ensuring you’re always one step ahead in your programming journey.
       </p>
     </div>

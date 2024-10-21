@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 function DarkModeToggle() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -12,8 +12,8 @@ function DarkModeToggle() {
       setIsDarkMode(false);
       document.documentElement.classList.remove('dark');
     }
-  }, []);
-
+}, []);
+  
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
     if (!isDarkMode) {
@@ -27,10 +27,10 @@ function DarkModeToggle() {
 
   return (
     <div
-      className={`w-14 h-8 flex items-center  bg-gray-600 dark:bg-thirdBg rounded-full p-1 cursor-pointer transition-all duration-2000 ease-linear ${isDarkMode ? 'justify-end' : 'justify-start'}`}
+      className={`w-14 h-8 flex items-center  bg-white dark:bg-primaryBg rounded-full p-1 cursor-pointer transition-all duration-2000 ease-linear ${isDarkMode ? 'justify-end' : 'justify-start'}`}
       onClick={toggleDarkMode}
     >
-      <div className="w-6 h-6  bg-primaryBg rounded-full shadow-md transform transition-all duration-2000 ease-in-out"></div>
+      <div className="w-6 h-6  bg-thirdBg dark:bg-secondBg rounded-full shadow-md transform transition-all duration-2000 ease-in-out"></div>
     </div>
   );
 }

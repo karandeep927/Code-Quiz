@@ -8,14 +8,12 @@ export default {
     extend: {
       colors:{
         primaryText:'#021526',
-        secondText:'#03346E',
-        thirdText:'#6EACDA',
-        whiteText:'#fff',
+        secondText:'#0000f6',
+        thirdText:'#75747475',
        
         primaryBg:'#021526',
-        secondBg:'#03346E',
-        thirdBg:'#6EACDA',
-        whiteBg:'#fff'
+        secondBg:'#0000f6',
+        thirdBg:'#515151ba',
       }
     },
   },

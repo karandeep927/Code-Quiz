@@ -62,9 +62,9 @@ function Result() {
   useEffect(countScore,[questions])
   return (
     <div className="pb-5 min-h-screen pt-[70px] flex flex-col gap-6 justify-center items-center relative dark:bg-gray-800">
-      <div className="w-full flex justify-between items-center py-3 shadow-md absolute top-0 px-5 bg-white dark:bg-gray-800">
+      <div className="w-full flex justify-between items-center py-3 shadow-md absolute top-0 px-5 bg-secondBg dark:bg-gray-800">
         <Button
-          className="text-thirdBg dark:text-white"
+          className="text-white dark:text-white"
           onclick={() => navigate("/")}
         >
           Back To Home
